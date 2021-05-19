@@ -86,6 +86,7 @@ let sedesMunicipais = new ol.layer.Image({
 
 let sedesPorMeso = new ol.layer.Image({visible: false});
 let rodoviasPertoSede = new ol.layer.Image({visible: false});
+let municipiosComGas = new ol.layer.Image({visible: false});
 
 let layers = {
     mesorregioes: mesorregioes,
@@ -204,6 +205,7 @@ let $mesoSelect = document.getElementById('meso_select');
 function getMunicipiosFromMeso() {
     let mesoName = $mesoSelect.value;
     map.removeLayer(sedesPorMeso);
+    delete layers['sedesPorMeso'];
     if (mesoName === '') {return;}
     sedesPorMeso = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -214,9 +216,11 @@ function getMunicipiosFromMeso() {
                 VIEWPARAMS: `mesorregiao_nm:${mesoName}`
             }
         }),
-        visible: true
+        visible: true,
+        opacity: 0.25
     });
     map.addLayer(sedesPorMeso);
+    layers.sedesPorMeso = sedesPorMeso;
 }
 
 function getRodoviasPertoDeSedeBuffer() {
@@ -235,4 +239,22 @@ function getRodoviasPertoDeSedeBuffer() {
         visible: true
     });
     map.addLayer(rodoviasPertoSede);
+    layers.rodoviasPertoSede = rodoviasPertoSede;
+}
+
+function getMunicipiosComGas() {
+    map.removeLayer(municipiosComGas);
+    municipiosComGas = new ol.layer.Image({
+        source: new ol.source.ImageWMS({
+            url: URL_WMS,
+            params: {
+                LAYERS: 'geocapixaba:municipios_com_gas',
+                STYLES: ''
+            }
+        }),
+        visible: true,
+        opacity: 0.25
+    });
+    map.addLayer(municipiosComGas);
+    layers.municipiosComGas = municipiosComGas;
 }
