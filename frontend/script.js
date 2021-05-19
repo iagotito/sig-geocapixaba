@@ -1,8 +1,13 @@
 const URL_WMS = 'http://localhost:8080/geoserver/geocapixaba/wms';
+const WGS84_LATLONG = 'EPSG:4326';
+const WGS84_UTM = 'EPSG:3857';
 
-var mousePos = document.getElementById('mouse-position');
+let mousePos = document.getElementById('mouse-position');
+document.getElementById('btn').addEventListener('click', function() {
+    abastecimentoUrbanoAgua.values_.visible = !abastecimentoUrbanoAgua.values_.visible;
+});
 
-var limitesMunicipais = new ol.layer.Image({
+let limitesMunicipais = new ol.layer.Image({
     source: new ol.source.ImageWMS({
         url: URL_WMS,
         params: {
@@ -10,10 +15,10 @@ var limitesMunicipais = new ol.layer.Image({
             STYLES: ''
         }
     }),
-    visible: true
+    visible: false
 });
 
-var estacoesTratamentoEsgoto = new ol.layer.Image({
+let estacoesTratamentoEsgoto = new ol.layer.Image({
     source: new ol.source.ImageWMS({
         url: URL_WMS,
         params: {
@@ -21,10 +26,10 @@ var estacoesTratamentoEsgoto = new ol.layer.Image({
             STYLES: ''
         }
     }),
-    visible: true
+    visible: false
 });
 
-var abastecimentoUrbanoAgua = new ol.layer.Image({
+let abastecimentoUrbanoAgua = new ol.layer.Image({
     source: new ol.source.ImageWMS({
         url: URL_WMS,
         params: {
@@ -32,10 +37,10 @@ var abastecimentoUrbanoAgua = new ol.layer.Image({
             STYLES: ''
         }
     }),
-    visible: true
+    visible: false
 });
 
-var mesorregioes = new ol.layer.Image({
+let mesorregioes = new ol.layer.Image({
     source: new ol.source.ImageWMS({
         url: URL_WMS,
         params: {
@@ -46,7 +51,7 @@ var mesorregioes = new ol.layer.Image({
     visible: true
 });
 
-var redeDeGas = new ol.layer.Image({
+let redeDeGas = new ol.layer.Image({
     source: new ol.source.ImageWMS({
         url: URL_WMS,
         params: {
@@ -54,10 +59,10 @@ var redeDeGas = new ol.layer.Image({
             STYLES: ''
         }
     }),
-    visible: true
+    visible: false
 });
 
-var redeRodoviaria = new ol.layer.Image({
+let redeRodoviaria = new ol.layer.Image({
     source: new ol.source.ImageWMS({
         url: URL_WMS,
         params: {
@@ -65,10 +70,10 @@ var redeRodoviaria = new ol.layer.Image({
             STYLES: ''
         }
     }),
-    visible: true
+    visible: false
 });
 
-var sedesMunicipais = new ol.layer.Image({
+let sedesMunicipais = new ol.layer.Image({
     source: new ol.source.ImageWMS({
         url: URL_WMS,
         params: {
@@ -76,27 +81,30 @@ var sedesMunicipais = new ol.layer.Image({
             STYLES: ''
         }
     }),
-    visible: true
+    visible: false
 });
 
-var mousePositionControl = new ol.control.MousePosition({
+let layers = [limitesMunicipais, estacoesTratamentoEsgoto, abastecimentoUrbanoAgua, 
+mesorregioes, redeDeGas, redeRodoviaria, sedesMunicipais];
+
+let mousePositionControl = new ol.control.MousePosition({
     coordinateFormat: ol.coordinate.createStringXY(7),
-    projection: 'EPSG_4326',
+    projection: WGS84_LATLONG,
     callName: 'custom-mouse-position',
     target: mousePos,
     undefinedHTML: '&nbsp'
 });
 
-var map = new ol.Map({
+let map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.Tile({
         source: new ol.source.OSM()
         }),
-        limitesMunicipais,
-        abastecimentoUrbanoAgua,
-        estacoesTratamentoEsgoto,
         mesorregioes,
+        limitesMunicipais,
+        estacoesTratamentoEsgoto,
+        abastecimentoUrbanoAgua,
         redeDeGas,
         redeRodoviaria,
         sedesMunicipais
@@ -110,4 +118,34 @@ var map = new ol.Map({
             collapsible: false
         })
     }).extend([mousePositionControl])
+});
+
+map.on('singleclick', function(evt){
+    let coordinate = evt.coordinate;
+    let viewResolution = map.getView().getResolution();
+    
+    let urlInfo;
+    let queryArray = [];
+    layers.forEach((l) => {
+        if (l.values_.visible === true) {
+            urlInfo = l.getSource().getFeatureInfoUrl (
+                coordinate, viewResolution, WGS84_UTM, {'INFO_FORMAT': 'text/html'}
+            );
+            queryArray.push(urlInfo);
+        }
+    });
+
+    queryArray.forEach((url) => {
+        fetch(url)
+        .then(res => {
+            return res.text();
+        })
+        .then(text => {
+            console.log(text);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    });
+
 });
