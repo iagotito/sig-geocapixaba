@@ -85,6 +85,7 @@ let sedesMunicipais = new ol.layer.Image({
 });
 
 let sedesPorMeso = new ol.layer.Image({visible: false});
+let rodoviasPertoSede = new ol.layer.Image({visible: false});
 
 let layers = {
     mesorregioes: mesorregioes,
@@ -94,7 +95,8 @@ let layers = {
     redeDeGas: redeDeGas,
     sedesMunicipais: sedesMunicipais,
     estacoesTratamentoEsgoto: estacoesTratamentoEsgoto,
-    sedesPorMeso: sedesPorMeso
+    sedesPorMeso: sedesPorMeso,
+    rodoviasPertoSede: rodoviasPertoSede
 };
 
 let mousePositionControl = new ol.control.MousePosition({
@@ -118,7 +120,8 @@ let map = new ol.Map({
         redeDeGas,
         redeRodoviaria,
         sedesMunicipais,
-        sedesPorMeso
+        sedesPorMeso,
+        rodoviasPertoSede
     ],
     view: new ol.View({
         center: ol.proj.fromLonLat([-40.483260, -19.691305]),
@@ -198,7 +201,7 @@ $closer.onclick = function() {
 map.addOverlay(overlay);
 
 let $mesoSelect = document.getElementById('meso_select');
-function getSedesFromMeso() {
+function getMunicipiosFromMeso() {
     let mesoName = $mesoSelect.value;
     map.removeLayer(sedesPorMeso);
     if (mesoName === '') {return;}
@@ -206,7 +209,7 @@ function getSedesFromMeso() {
         source: new ol.source.ImageWMS({
             url: URL_WMS,
             params: {
-                LAYERS: 'geocapixaba:sedes_por_mesorregiao',
+                LAYERS: 'geocapixaba:municipios_por_mesorregiao',
                 STYLES: '',
                 VIEWPARAMS: `mesorregiao_nm:${mesoName}`
             }
@@ -214,4 +217,22 @@ function getSedesFromMeso() {
         visible: true
     });
     map.addLayer(sedesPorMeso);
+}
+
+function getRodoviasPertoDeSedeBuffer() {
+    let sedeName = 'LINHARES';
+    let bufferRadius = 5000;
+    map.removeLayer(rodoviasPertoSede);
+    rodoviasPertoSede = new ol.layer.Image({
+        source: new ol.source.ImageWMS({
+            url: URL_WMS,
+            params: {
+                LAYERS: 'geocapixaba:rodovias_perto_de_sede_buffer',
+                STYLES: '',
+                VIEWPARAMS: `sedeName:${sedeName};bufferRadius:${bufferRadius}`
+            }
+        }),
+        visible: true
+    });
+    map.addLayer(rodoviasPertoSede);
 }

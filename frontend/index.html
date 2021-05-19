@@ -134,7 +134,7 @@
     </style>
   </head>
   <body>
-      <button id='btn'>btn</button>
+      <button onclick='getRodoviasPertoDeSedeBuffer()' id='btn'>btn</button>
     <div class="root">
       <div id="map"></div>
       <div class="mouse-position">&nbsp</div>
@@ -262,8 +262,8 @@
 
           <div>
             <h1 class="title">Consultas</h1>
-              <label for="meso_select">Sedes de municípíos na mesorregião </label>
-              <select onchange="getSedesFromMeso()" name="meso_select" id="meso_select">
+              <label for="meso_select">Municípíos na mesorregião </label>
+              <select onchange="getMunicipiosFromMeso()" name="meso_select" id="meso_select">
                   <option value="">Selecionar mesorregião</option>
                   <option value="Central Espírito-santense">Central Espírito-santense</option>
                   <option value="Litoral Norte Espírito-santense">Litoral Norte Espírito-santense</option>
