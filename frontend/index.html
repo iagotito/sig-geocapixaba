@@ -1,20 +1,271 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>GeoCapixaba</title>
-    <link rel="stylesheet" href="https://openlayers.org/en/v3.20.1/css/ol.css" type="text/css">
-	<script src="openlayers/build/ol.js" type="text/javascript"></script>
+    <link
+      rel="stylesheet"
+      href="https://openlayers.org/en/v3.20.1/css/ol.css"
+      type="text/css"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="openlayers/build/ol.js" type="text/javascript"></script>
+    <script
+      src="https://kit.fontawesome.com/b783f95957.js"
+      crossorigin="anonymous"
+    ></script>
+
     <style>
+      body {
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      h2 {
+        font-family: "Roboto", "sans-serif";
+        font-size: 1.6rem;
+      }
+
+      .root {
+        height: 100vh;
+        width: 100%;
+
+        display: flex;
+      }
+
       #map {
-        width: 800px;
-        height: 500px;
+        width: 100%;
+        height: 100vh;
+      }
+
+      .list {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .container {
+        background: #f8f8f8;
+        border-radius: 2px;
+        display: inline-block;
+        height: inherit;
+        margin: 0;
+        padding-left: 20px;
+        position: relative;
+        width: 500px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      }
+
+      .icon {
+        vertical-align: middle;
+        width: 30px;
+      }
+
+      .label {
+        vertical-align: middle;
+        font-family: "Roboto", "sans-serif";
+      }
+
+      .checkboxes {
+        padding: 5px 0;
+      }
+
+      .title {
+        font-family: "Roboto", serif;
+        font-size: 1.5em;
+        padding-top: 10px;
+        letter-spacing: 0.08em;
+        font-weight: 300;
+        color: #212121;
+        text-shadow: 0 1px 1px #ffffff;
+        text-transform: uppercase;
+      }
+
+      .divider {
+        border-bottom: 1px solid #fff;
+        background-color: #dadada;
+        height: 1px;
+        margin: 0.5em 0px 1.5em;
+      }
+
+      .divider span {
+        display: block;
+        width: 50px;
+        height: 1px;
+        background-color: #212121;
+      }
+
+      .search {
+        width: 50%;
+        position: relative;
+        display: flex;
+        padding: 10px 0 20px 0;
+      }
+
+      .searchTerm {
+        width: 100%;
+        border: 3px solid #212121;
+        border-right: none;
+        padding: 5px;
+        height: 20px;
+        border-radius: 5px 0 0 5px;
+        outline: none;
+        color: #212121;
+      }
+
+      .searchTerm:focus {
+        color: #212121;
+      }
+
+      .searchButton {
+        width: 40px;
+        height: 36px;
+        border: 1px solid #212121;
+        background: #212121;
+        text-align: center;
+        color: #fff;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-size: 20px;
       }
     </style>
   </head>
   <body>
-    <div id="map"></div>
-    <div id="mouse-position">&nbsp</div>
+    <div class="root">
+      <div id="map"></div>
+      <div class="mouse-position">&nbsp</div>
+
+      <div id="popup">
+        <a href="#" id="popup-closer"></a>
+        <div id="popup-content"></div>
+      </div>
+
+      <div class="container">
+        <div class="list">
+          <h1 class="title">CAMADAS</h1>
+          <div class="divider"><span></span></div>
+
+          <div class="checkboxes">
+            <input
+              type="checkbox"
+              id="mesoregiao"
+              name="mesoregiao"
+              value="true"
+              onclick='activeLayer("mesoregiao", this.checked)'
+            />
+            <img
+              class="icon"
+              src="https://img-premium.flaticon.com/png/512/991/991403.png?token=exp=1621408748~hmac=49cd1ad8d7b55439e292b0e5bac0766c"
+            />
+            <span class="label"> Mesoregião</span>
+          </div>
+
+          <div class="checkboxes">
+            <input
+              type="checkbox"
+              id="municipios"
+              name="municipios"
+              value="true"
+              onclick='activeLayer("municipios", this.checked)'
+            />
+            <img
+              class="icon"
+              src="https://img-premium.flaticon.com/png/512/2352/2352935.png?token=exp=1621397601~hmac=37842c3cc3025853a093c4d69c6cec87"
+            />
+
+            <span class="label">Redes de Esgoto</span>
+          </div>
+
+          <div class="checkboxes">
+            <input
+              type="checkbox"
+              id="rodovias"
+              name="rodovias"
+              value="true"
+              onclick='activeLayer("rodovias", this.checked)'
+            />
+            <img
+              class="icon"
+              src="https://img-premium.flaticon.com/png/512/869/869836.png?token=exp=1621399469~hmac=9eb31e4d922f2851b9a51f100542fd5b"
+            />
+
+            <span class="label">Rede de Gás</span>
+          </div>
+
+          <div class="checkboxes">
+            <input
+              type="checkbox"
+              id="delegacias_civis"
+              name="delegacias_civis"
+              value="true"
+              onclick='activeLayer("delegacias_civis", this.checked)'
+            />
+            <img
+              class="icon"
+              src="https://img-premium.flaticon.com/png/512/2634/2634465.png?token=exp=1621399605~hmac=a1a6a04fcb448801c44007dcde0226db"
+            />
+
+            <span class="label">Abastecimento de água</span>
+
+            <!-- <button type="button" onclick='near("delegacias_civis")'>
+              <i class="fas fa-search"></i>
+            </button>
+            <button type="button" onclick="clear_delegacias_civis_near()">
+              <i class="fas fa-trash-alt"></i>
+            </button> -->
+          </div>
+
+          <div class="checkboxes">
+            <input
+              type="checkbox"
+              id="delegacias"
+              name="delegacias_federais"
+              value="true"
+              onclick='activeLayer("delegacias_federais", this.checked)'
+            />
+            <img
+              class="icon"
+              src="https://img-premium.flaticon.com/png/512/3410/3410686.png?token=exp=1621399947~hmac=2af196247820c0b17419ac154b5ada33"
+            />
+
+            <span class="label">Rodovias</span>
+
+            <h1 class="title">Buffer</h1>
+            <div class="divider"><span></span></div>
+
+            <label for="municipio">Sedes Municipais</label>
+            <div class="search">
+              <input
+                type="text"
+                id="municipio"
+                class="searchTerm"
+                placeholder="(km)"
+              />
+              <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+
+            <label for="agua">Água</label>
+            <div class="search">
+              <input
+                type="text"
+                id="agua"
+                class="searchTerm"
+                placeholder="(km)"
+              />
+              <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
