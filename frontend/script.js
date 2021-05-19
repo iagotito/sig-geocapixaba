@@ -88,6 +88,8 @@ let sedesPorMeso = new ol.layer.Image({visible: false});
 let rodoviasPertoSede = new ol.layer.Image({visible: false});
 let municipiosComGas = new ol.layer.Image({visible: false});
 let maiorEstacao = new ol.layer.Image({visible: false});
+let municipiosCruzados = new ol.layer.Image({visible: false});
+let rodoviaComSigla = new ol.layer.Image({visible: false});
 
 let layers = {
     mesorregioes: mesorregioes,
@@ -277,4 +279,36 @@ function getMaiorEstacaoMunicipio() {
     });
     map.addLayer(maiorEstacao);
     layers.maiorEstacao = maiorEstacao;
+}
+
+function getMunicipiosCruzadosPorRodovia() {
+    let sigla = 'ES-164';
+    map.removeLayer(municipiosCruzados);
+    map.removeLayer(rodoviaComSigla);
+    municipiosCruzados = new ol.layer.Image({
+        source: new ol.source.ImageWMS({
+            url: URL_WMS,
+            params: {
+                LAYERS: 'geocapixaba:municipios_cruzados_por_rodovia',
+                STYLES: '',
+                VIEWPARAMS: `sigla:${sigla}`
+            }
+        }),
+        visible: true
+    });
+    rodoviaComSigla = new ol.layer.Image({
+        source: new ol.source.ImageWMS({
+            url: URL_WMS,
+            params: {
+                LAYERS: 'geocapixaba:rodovias_com_sigla',
+                STYLES: '',
+                VIEWPARAMS: `sigla:${sigla}`
+            }
+        }),
+        visible: true
+    });
+    map.addLayer(municipiosCruzados);
+    map.addLayer(rodoviaComSigla);
+    layers.municipiosCruzados = municipiosCruzados;
+    layers.rodoviaComSigla = rodoviaComSigla;
 }
