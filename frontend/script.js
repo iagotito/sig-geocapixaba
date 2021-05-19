@@ -15,7 +15,7 @@ let limitesMunicipais = new ol.layer.Image({
             STYLES: ''
         }
     }),
-    visible: true
+    visible: false
 });
 
 let estacoesTratamentoEsgoto = new ol.layer.Image({
@@ -37,7 +37,7 @@ let abastecimentoUrbanoAgua = new ol.layer.Image({
             STYLES: ''
         }
     }),
-    visible: true
+    visible: false
 });
 
 let mesorregioes = new ol.layer.Image({
@@ -84,8 +84,15 @@ let sedesMunicipais = new ol.layer.Image({
     visible: false
 });
 
-let layers = [limitesMunicipais, estacoesTratamentoEsgoto, abastecimentoUrbanoAgua, 
-mesorregioes, redeDeGas, redeRodoviaria, sedesMunicipais];
+let layers = {
+    mesorregioes: mesorregioes,
+    limitesMunicipais: limitesMunicipais,
+    abastecimentoUrbanoAgua: abastecimentoUrbanoAgua, 
+    redeRodoviaria: redeRodoviaria,
+    redeDeGas: redeDeGas,
+    sedesMunicipais: sedesMunicipais,
+    estacoesTratamentoEsgoto: estacoesTratamentoEsgoto
+};
 
 let mousePositionControl = new ol.control.MousePosition({
     coordinateFormat: ol.coordinate.createStringXY(7),
@@ -126,7 +133,7 @@ map.on('singleclick', function(evt){
     
     let urlInfo;
     let queryArray = [];
-    layers.forEach((l) => {
+    Object.values(layers).forEach((l) => {
         if (l.values_.visible === true) {
             urlInfo = l.getSource().getFeatureInfoUrl (
                 coordinate, viewResolution, WGS84_UTM, {'INFO_FORMAT': 'text/html'}
@@ -149,6 +156,11 @@ map.on('singleclick', function(evt){
         });
     });
 });
+
+function activeLayer(layerName, visible) {
+    layer = layers[layerName];
+    layer.setVisible(visible);
+}
 
 function handleResult(result,coordinate) {
 	 let html = subStringBody(result);
