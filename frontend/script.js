@@ -2,10 +2,10 @@ const URL_WMS = 'http://localhost:8080/geoserver/geocapixaba/wms';
 const WGS84_LATLONG = 'EPSG:4326';
 const WGS84_UTM = 'EPSG:3857';
 
-let mousePos = document.getElementById('mouse-position');
-document.getElementById('btn').addEventListener('click', function() {
-    abastecimentoUrbanoAgua.values_.visible = !abastecimentoUrbanoAgua.values_.visible;
-});
+let $mousePos = document.getElementById('mouse-position');
+let $container = document.getElementById('popup');
+let $content = document.getElementById('popup-content');
+let $closer = document.getElementById('popup-closer');
 
 let limitesMunicipais = new ol.layer.Image({
     source: new ol.source.ImageWMS({
@@ -15,7 +15,7 @@ let limitesMunicipais = new ol.layer.Image({
             STYLES: ''
         }
     }),
-    visible: false
+    visible: true
 });
 
 let estacoesTratamentoEsgoto = new ol.layer.Image({
@@ -37,7 +37,7 @@ let abastecimentoUrbanoAgua = new ol.layer.Image({
             STYLES: ''
         }
     }),
-    visible: false
+    visible: true
 });
 
 let mesorregioes = new ol.layer.Image({
@@ -48,7 +48,7 @@ let mesorregioes = new ol.layer.Image({
             STYLES: ''
         }
     }),
-    visible: true
+    visible: false
 });
 
 let redeDeGas = new ol.layer.Image({
@@ -91,7 +91,7 @@ let mousePositionControl = new ol.control.MousePosition({
     coordinateFormat: ol.coordinate.createStringXY(7),
     projection: WGS84_LATLONG,
     callName: 'custom-mouse-position',
-    target: mousePos,
+    target: $mousePos,
     undefinedHTML: '&nbsp'
 });
 
@@ -135,17 +135,48 @@ map.on('singleclick', function(evt){
         }
     });
 
+    $content.innerHTML = '';
     queryArray.forEach((url) => {
         fetch(url)
         .then(res => {
             return res.text();
         })
         .then(text => {
-            console.log(text);
+            handleResult(text, coordinate);
         })
         .catch((err) => {
             console.log(err);
         });
     });
-
 });
+
+function handleResult(result,coordinate) {
+	 let html = subStringBody(result);
+	 $content.innerHTML += result;
+	 overlay.setPosition(coordinate);
+}
+
+function subStringBody(html) {
+	let i = html.indexOf("<body>");
+	let f = html.indexOf("</body>");
+	if(i >= 0 && f >= 0) {
+		i += 6;
+		return html.substring(i, f);
+	}
+}
+
+let overlay = new ol.Overlay(({
+    element: $container,
+    autoPan: true,
+    autoPanAnimation: {
+        duration: 250
+    }
+}));
+
+$closer.onclick = function() {
+    overlay.setPosition(undefined);
+    $closer.blur();
+    return false;
+};
+
+map.addOverlay(overlay);
