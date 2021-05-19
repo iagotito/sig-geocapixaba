@@ -84,6 +84,8 @@ let sedesMunicipais = new ol.layer.Image({
     visible: false
 });
 
+let sedesPorMeso = new ol.layer.Image({visible: false});
+
 let layers = {
     mesorregioes: mesorregioes,
     limitesMunicipais: limitesMunicipais,
@@ -91,7 +93,8 @@ let layers = {
     redeRodoviaria: redeRodoviaria,
     redeDeGas: redeDeGas,
     sedesMunicipais: sedesMunicipais,
-    estacoesTratamentoEsgoto: estacoesTratamentoEsgoto
+    estacoesTratamentoEsgoto: estacoesTratamentoEsgoto,
+    sedesPorMeso: sedesPorMeso
 };
 
 let mousePositionControl = new ol.control.MousePosition({
@@ -114,7 +117,8 @@ let map = new ol.Map({
         abastecimentoUrbanoAgua,
         redeDeGas,
         redeRodoviaria,
-        sedesMunicipais
+        sedesMunicipais,
+        sedesPorMeso
     ],
     view: new ol.View({
         center: ol.proj.fromLonLat([-40.483260, -19.691305]),
@@ -192,3 +196,22 @@ $closer.onclick = function() {
 };
 
 map.addOverlay(overlay);
+
+let $mesoSelect = document.getElementById('meso_select');
+function getSedesFromMeso() {
+    let mesoName = $mesoSelect.value;
+    map.removeLayer(sedesPorMeso);
+    if (mesoName === '') {return;}
+    sedesPorMeso = new ol.layer.Image({
+        source: new ol.source.ImageWMS({
+            url: URL_WMS,
+            params: {
+                LAYERS: 'geocapixaba:sedes_por_mesorregiao',
+                STYLES: '',
+                VIEWPARAMS: `mesorregiao_nm:${mesoName}`
+            }
+        }),
+        visible: true
+    });
+    map.addLayer(sedesPorMeso);
+}
