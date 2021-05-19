@@ -62,6 +62,7 @@
       .icon {
         vertical-align: middle;
         width: 30px;
+        padding: 0 8px;
       }
 
       .label {
@@ -71,6 +72,8 @@
 
       .checkboxes {
         padding: 5px 0;
+        display: flex;
+        align-items: center;
       }
 
       .title {
@@ -131,18 +134,60 @@
         cursor: pointer;
         font-size: 20px;
       }
+
+      input[type="checkbox"] {
+        height: 0;
+        width: 0;
+        visibility: hidden;
+        display: none;
+      }
+
+      .labelSwitch {
+        cursor: pointer;
+        width: 35px;
+        height: 20px;
+        background: grey;
+        display: block;
+        border-radius: 100px;
+        position: relative;
+      }
+
+      .labelSwitch:after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 3px;
+        width: 15px;
+        height: 15px;
+        background: #fff;
+        border-radius: 90px;
+        transition: 0.3s;
+      }
+
+      input:checked + .labelSwitch {
+        background: #212121;
+      }
+
+      input:checked + .labelSwitch:after {
+        left: calc(100% - 5px);
+        transform: translateX(-100%);
+      }
+
+      /* .labelSwitch:active:after {
+        width: 30px;
+      } */
     </style>
   </head>
   <body>
-      <button onclick='getRodoviasPertoDeSedeBuffer()' id='btn'>btn</button>
+    <button onclick="getRodoviasPertoDeSedeBuffer()" id="btn">btn</button>
     <div class="root">
       <div id="map"></div>
       <div class="mouse-position">&nbsp</div>
 
-    <div style="background-color: #808080" id="popup">
+      <div style="background-color: #808080" id="popup">
         <button id="popup-closer">X</button>
         <div id="popup-content"></div>
-    </div>
+      </div>
 
       <div class="container">
         <div class="list">
@@ -157,10 +202,9 @@
               value="true"
               onclick='activeLayer("mesorregioes", this.checked)'
             />
-            <img
-              class="icon"
-              src="https://img-premium.flaticon.com/png/512/991/991403.png?token=exp=1621408748~hmac=49cd1ad8d7b55439e292b0e5bac0766c"
-            />
+            <label class="labelSwitch" for="mesorregioes"></label>
+
+            <img class="icon" src="./assets/mesoregiao.png" />
             <span class="label"> Mesorregiões</span>
           </div>
 
@@ -172,10 +216,9 @@
               value="true"
               onclick='activeLayer("limitesMunicipais", this.checked)'
             />
-            <img
-              class="icon"
-              src="https://img-premium.flaticon.com/png/512/2352/2352935.png?token=exp=1621397601~hmac=37842c3cc3025853a093c4d69c6cec87"
-            />
+            <label class="labelSwitch" for="limitesMunicipais"></label>
+
+            <img class="icon" src="./assets/limites.png" />
 
             <span class="label">Limites municipais</span>
           </div>
@@ -188,10 +231,9 @@
               value="true"
               onclick='activeLayer("abastecimentoUrbanoAgua", this.checked)'
             />
-            <img
-              class="icon"
-              src="https://img-premium.flaticon.com/png/512/869/869836.png?token=exp=1621399469~hmac=9eb31e4d922f2851b9a51f100542fd5b"
-            />
+            <label class="labelSwitch" for="abastecimentoUrbanoAgua"></label>
+
+            <img class="icon" src="./assets/agua.png" />
 
             <span class="label">Abastecimento urbano de água</span>
           </div>
@@ -204,10 +246,9 @@
               value="true"
               onclick='activeLayer("redeRodoviaria", this.checked)'
             />
-            <img
-              class="icon"
-              src="https://img-premium.flaticon.com/png/512/2634/2634465.png?token=exp=1621399605~hmac=a1a6a04fcb448801c44007dcde0226db"
-            />
+            <label class="labelSwitch" for="redeRodoviaria"></label>
+
+            <img class="icon" src="./assets/rodovias.png" />
 
             <span class="label">Rede rodoviaria</span>
           </div>
@@ -220,10 +261,9 @@
               value="true"
               onclick='activeLayer("redeDeGas", this.checked)'
             />
-            <img
-              class="icon"
-              src="https://img-premium.flaticon.com/png/512/3410/3410686.png?token=exp=1621399947~hmac=2af196247820c0b17419ac154b5ada33"
-            />
+            <label class="labelSwitch" for="redeDeGas"></label>
+
+            <img class="icon" src="./assets/gas.png" />
 
             <span class="label">Rede de gás</span>
           </div>
@@ -236,10 +276,9 @@
               value="true"
               onclick='activeLayer("sedesMunicipais", this.checked)'
             />
-            <img
-              class="icon"
-              src="https://img-premium.flaticon.com/png/512/3410/3410686.png?token=exp=1621399947~hmac=2af196247820c0b17419ac154b5ada33"
-            />
+            <label class="labelSwitch" for="sedesMunicipais"></label>
+
+            <img class="icon" src="./assets/sedes.png" />
 
             <span class="label">Sedes municipais</span>
           </div>
@@ -252,25 +291,36 @@
               value="true"
               onclick='activeLayer("estacoesTratamentoEsgoto", this.checked)'
             />
-            <img
-              class="icon"
-              src="https://img-premium.flaticon.com/png/512/3410/3410686.png?token=exp=1621399947~hmac=2af196247820c0b17419ac154b5ada33"
-            />
+            <label class="labelSwitch" for="estacoesTratamentoEsgoto"></label>
+
+            <img class="icon" src="./assets/esgoto.png" />
 
             <span class="label">Estações de tratamento de esgoto</span>
           </div>
 
           <div>
             <h1 class="title">Consultas</h1>
-              <label for="meso_select">Municípíos na mesorregião </label>
-              <select onchange="getMunicipiosFromMeso()" name="meso_select" id="meso_select">
-                  <option value="">Selecionar mesorregião</option>
-                  <option value="Central Espírito-santense">Central Espírito-santense</option>
-                  <option value="Litoral Norte Espírito-santense">Litoral Norte Espírito-santense</option>
-                  <option value="Noroeste Espírito-santense">Noroeste Espírito-santense</option>
-                  <option value="Sul Espírito-santense">Sul Espírito-santense</option>
-              </select>
-            </div>
+            <label for="meso_select">Municípíos na mesorregião </label>
+            <select
+              onchange="getMunicipiosFromMeso()"
+              name="meso_select"
+              id="meso_select"
+            >
+              <option value="">Selecionar mesorregião</option>
+              <option value="Central Espírito-santense">
+                Central Espírito-santense
+              </option>
+              <option value="Litoral Norte Espírito-santense">
+                Litoral Norte Espírito-santense
+              </option>
+              <option value="Noroeste Espírito-santense">
+                Noroeste Espírito-santense
+              </option>
+              <option value="Sul Espírito-santense">
+                Sul Espírito-santense
+              </option>
+            </select>
+          </div>
           <div>
             <h1 class="title">Buffer</h1>
             <div class="divider"><span></span></div>
@@ -306,5 +356,5 @@
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
