@@ -87,6 +87,7 @@ let sedesMunicipais = new ol.layer.Image({
 let sedesPorMeso = new ol.layer.Image({visible: false});
 let rodoviasPertoSede = new ol.layer.Image({visible: false});
 let municipiosComGas = new ol.layer.Image({visible: false});
+let maiorEstacao = new ol.layer.Image({visible: false});
 
 let layers = {
     mesorregioes: mesorregioes,
@@ -122,7 +123,8 @@ let map = new ol.Map({
         redeRodoviaria,
         sedesMunicipais,
         sedesPorMeso,
-        rodoviasPertoSede
+        rodoviasPertoSede,
+        maiorEstacao
     ],
     view: new ol.View({
         center: ol.proj.fromLonLat([-40.483260, -19.691305]),
@@ -257,4 +259,22 @@ function getMunicipiosComGas() {
     });
     map.addLayer(municipiosComGas);
     layers.municipiosComGas = municipiosComGas;
+}
+
+function getMaiorEstacaoMunicipio() {
+    let municipioName = 'Cariacica';
+    map.removeLayer(maiorEstacao);
+    maiorEstacao = new ol.layer.Image({
+        source: new ol.source.ImageWMS({
+            url: URL_WMS,
+            params: {
+                LAYERS: 'geocapixaba:maior_estacao_no_municipio',
+                STYLES: '',
+                VIEWPARAMS: `municipioName:${municipioName}`
+            }
+        }),
+        visible: true
+    });
+    map.addLayer(maiorEstacao);
+    layers.maiorEstacao = maiorEstacao;
 }
