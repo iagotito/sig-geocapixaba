@@ -8,6 +8,7 @@
       href="https://openlayers.org/en/v3.20.1/css/ol.css"
       type="text/css"
     />
+    <link rel="stylesheet" href="./openlayers/css/ol.css" type="text/css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
@@ -20,7 +21,9 @@
     ></script>
 
     <style>
+      html,
       body {
+        padding: 0;
         margin: 0;
         box-sizing: border-box;
       }
@@ -48,6 +51,7 @@
       }
 
       .container {
+        overflow: auto;
         background: #f8f8f8;
         border-radius: 2px;
         display: inline-block;
@@ -102,7 +106,7 @@
       }
 
       .search {
-        width: 50%;
+        width: 65%;
         position: relative;
         display: flex;
         padding: 10px 0 20px 0;
@@ -111,9 +115,8 @@
       .searchTerm {
         width: 100%;
         border: 3px solid #212121;
-        border-right: none;
+        font-size: 1rem;
         padding: 5px;
-        height: 20px;
         border-radius: 5px 0 0 5px;
         outline: none;
         color: #212121;
@@ -133,6 +136,18 @@
         border-radius: 0 5px 5px 0;
         cursor: pointer;
         font-size: 20px;
+      }
+
+      .searchFormButton {
+        width: 120px;
+        height: 36px;
+        border: 1px solid #212121;
+        background: #212121;
+        text-align: center;
+        color: #fff;
+        border-radius: 5px 5px 5px 5px;
+        cursor: pointer;
+        font-size: 1rem;
       }
 
       input[type="checkbox"] {
@@ -179,7 +194,8 @@
     </style>
   </head>
   <body>
-    <button onclick="getRodoviasPertoDeSedeBuffer()" id="btn">btn</button>
+    <!-- <button onclick="getRodoviasPertoDeSedeBuffer()" id="btn">btn</button> -->
+
     <div class="root">
       <div id="map"></div>
       <div class="mouse-position">&nbsp</div>
@@ -193,158 +209,235 @@
         <div class="list">
           <h1 class="title">CAMADAS</h1>
           <div class="divider"><span></span></div>
+          <form>
+            <input type="reset" />
+            <div class="checkboxes">
+              <input
+                type="checkbox"
+                id="mesorregioes"
+                name="mesorregioes"
+                value="true"
+                onclick='activeLayer("mesorregioes", this.checked)'
+              />
+              <label class="labelSwitch" for="mesorregioes"></label>
 
-          <div class="checkboxes">
-            <input
-              type="checkbox"
-              id="mesorregioes"
-              name="mesorregioes"
-              value="true"
-              onclick='activeLayer("mesorregioes", this.checked)'
-            />
-            <label class="labelSwitch" for="mesorregioes"></label>
+              <img class="icon" src="./assets/mesoregiao.png" />
+              <span class="label"> Mesorregiões</span>
+            </div>
 
-            <img class="icon" src="./assets/mesoregiao.png" />
-            <span class="label"> Mesorregiões</span>
-          </div>
+            <div class="checkboxes">
+              <input
+                type="checkbox"
+                id="limitesMunicipais"
+                name="limitesMunicipais"
+                value="true"
+                onclick='activeLayer("limitesMunicipais", this.checked)'
+              />
+              <label class="labelSwitch" for="limitesMunicipais"></label>
 
-          <div class="checkboxes">
-            <input
-              type="checkbox"
-              id="limitesMunicipais"
-              name="limitesMunicipais"
-              value="true"
-              onclick='activeLayer("limitesMunicipais", this.checked)'
-            />
-            <label class="labelSwitch" for="limitesMunicipais"></label>
+              <img class="icon" src="./assets/limites.png" />
 
-            <img class="icon" src="./assets/limites.png" />
+              <span class="label">Limites municipais</span>
+            </div>
 
-            <span class="label">Limites municipais</span>
-          </div>
+            <div class="checkboxes">
+              <input
+                type="checkbox"
+                id="abastecimentoUrbanoAgua"
+                name="abastecimentoUrbanoAgua"
+                value="true"
+                onclick='activeLayer("abastecimentoUrbanoAgua", this.checked)'
+              />
+              <label class="labelSwitch" for="abastecimentoUrbanoAgua"></label>
 
-          <div class="checkboxes">
-            <input
-              type="checkbox"
-              id="abastecimentoUrbanoAgua"
-              name="abastecimentoUrbanoAgua"
-              value="true"
-              onclick='activeLayer("abastecimentoUrbanoAgua", this.checked)'
-            />
-            <label class="labelSwitch" for="abastecimentoUrbanoAgua"></label>
+              <img class="icon" src="./assets/agua.png" />
 
-            <img class="icon" src="./assets/agua.png" />
+              <span class="label">Abastecimento urbano de água</span>
+            </div>
 
-            <span class="label">Abastecimento urbano de água</span>
-          </div>
+            <div class="checkboxes">
+              <input
+                type="checkbox"
+                id="redeRodoviaria"
+                name="redeRodoviaria"
+                value="true"
+                onclick='activeLayer("redeRodoviaria", this.checked)'
+              />
+              <label class="labelSwitch" for="redeRodoviaria"></label>
 
-          <div class="checkboxes">
-            <input
-              type="checkbox"
-              id="redeRodoviaria"
-              name="redeRodoviaria"
-              value="true"
-              onclick='activeLayer("redeRodoviaria", this.checked)'
-            />
-            <label class="labelSwitch" for="redeRodoviaria"></label>
+              <img class="icon" src="./assets/rodovias.png" />
 
-            <img class="icon" src="./assets/rodovias.png" />
+              <span class="label">Rede rodoviaria</span>
+            </div>
 
-            <span class="label">Rede rodoviaria</span>
-          </div>
+            <div class="checkboxes">
+              <input
+                type="checkbox"
+                id="redeDeGas"
+                name="redeDeGas"
+                value="true"
+                onclick='activeLayer("redeDeGas", this.checked)'
+              />
+              <label class="labelSwitch" for="redeDeGas"></label>
 
-          <div class="checkboxes">
-            <input
-              type="checkbox"
-              id="redeDeGas"
-              name="redeDeGas"
-              value="true"
-              onclick='activeLayer("redeDeGas", this.checked)'
-            />
-            <label class="labelSwitch" for="redeDeGas"></label>
+              <img class="icon" src="./assets/gas.png" />
 
-            <img class="icon" src="./assets/gas.png" />
+              <span class="label">Rede de gás</span>
+            </div>
 
-            <span class="label">Rede de gás</span>
-          </div>
+            <div class="checkboxes">
+              <input
+                type="checkbox"
+                id="sedesMunicipais"
+                name="sedesMunicipais"
+                value="true"
+                onclick='activeLayer("sedesMunicipais", this.checked)'
+              />
+              <label class="labelSwitch" for="sedesMunicipais"></label>
 
-          <div class="checkboxes">
-            <input
-              type="checkbox"
-              id="sedesMunicipais"
-              name="sedesMunicipais"
-              value="true"
-              onclick='activeLayer("sedesMunicipais", this.checked)'
-            />
-            <label class="labelSwitch" for="sedesMunicipais"></label>
+              <img class="icon" src="./assets/sedes.png" />
 
-            <img class="icon" src="./assets/sedes.png" />
+              <span class="label">Sedes municipais</span>
+            </div>
 
-            <span class="label">Sedes municipais</span>
-          </div>
+            <div class="checkboxes">
+              <input
+                type="checkbox"
+                id="estacoesTratamentoEsgoto"
+                name="estacoesTratamentoEsgoto"
+                value="true"
+                onclick='activeLayer("estacoesTratamentoEsgoto", this.checked)'
+              />
+              <label class="labelSwitch" for="estacoesTratamentoEsgoto"></label>
 
-          <div class="checkboxes">
-            <input
-              type="checkbox"
-              id="estacoesTratamentoEsgoto"
-              name="estacoesTratamentoEsgoto"
-              value="true"
-              onclick='activeLayer("estacoesTratamentoEsgoto", this.checked)'
-            />
-            <label class="labelSwitch" for="estacoesTratamentoEsgoto"></label>
+              <img class="icon" src="./assets/esgoto.png" />
 
-            <img class="icon" src="./assets/esgoto.png" />
-
-            <span class="label">Estações de tratamento de esgoto</span>
-          </div>
-
+              <span class="label">Estações de tratamento de esgoto</span>
+            </div>
+          </form>
+          <!-- Consultas Topográficas -->
           <div>
             <h1 class="title">Consultas</h1>
-            <label for="meso_select">Municípíos na mesorregião </label>
-            <select
-              onchange="getMunicipiosFromMeso()"
-              name="meso_select"
-              id="meso_select"
-            >
-              <option value="">Selecionar mesorregião</option>
-              <option value="Central Espírito-santense">
-                Central Espírito-santense
-              </option>
-              <option value="Litoral Norte Espírito-santense">
-                Litoral Norte Espírito-santense
-              </option>
-              <option value="Noroeste Espírito-santense">
-                Noroeste Espírito-santense
-              </option>
-              <option value="Sul Espírito-santense">
-                Sul Espírito-santense
-              </option>
-            </select>
-          </div>
-          <div>
-            <h1 style="font-size: 1.2rem" class="title">Buffer</h1>
+
+            <h1 style="font-size: 1.2rem" class="title">Topográfica</h1>
             <div class="divider"><span></span></div>
 
-            <label for="municipio">Cidade</label>
+            <div style="margin-bottom: 20px">
+              <label for="meso_select" style="font-size: 1.2rem"
+                >Municípios na mesorregião
+              </label>
+              <select
+                style="padding: 5px; margin-top: 5px"
+                onchange="getMunicipiosFromMeso()"
+                name="meso_select"
+                id="meso_select"
+              >
+                <option value="">Selecionar mesorregião</option>
+                <option value="Central Espírito-santense">
+                  Central Espírito-santense
+                </option>
+                <option value="Litoral Norte Espírito-santense">
+                  Litoral Norte Espírito-santense
+                </option>
+                <option value="Noroeste Espírito-santense">
+                  Noroeste Espírito-santense
+                </option>
+                <option value="Sul Espírito-santense">
+                  Sul Espírito-santense
+                </option>
+              </select>
+            </div>
+
+            <label for="esgotoMunicipio" style="font-size: 1.2rem"
+              >Maior estação de tratamento de esgoto do município
+            </label>
             <div class="search">
               <input
-                type="text"
-                id="municipio"
+                type="search"
+                id="esgotoMunicipio"
                 class="searchTerm"
-                placeholder="Serra"
+                placeholder="(Ex: vila velha)"
               />
               <button type="submit" class="searchButton">
                 <i class="fa fa-search"></i>
               </button>
             </div>
-
-            <label for="raio">Raio (em metros)</label>
+            <label for="rodoviasMunicipio" style="font-size: 1.2rem"
+              >Municípios cruazados por rodovia</label
+            >
             <div class="search">
               <input
-                type="text"
-                id="raio"
+                type="search"
+                id="rodoviasMunicipio"
                 class="searchTerm"
-                placeholder="(Ex: 2000)"
+                placeholder="(Ex: ES-010)"
+              />
+              <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="checkboxes">
+            <input
+              type="checkbox"
+              id="municipiosRedeGas"
+              name="municipiosRedeGas"
+              value="true"
+              onclick='activeLayer("municipiosRedeGas", this.checked)'
+            />
+            <label class="labelSwitch" for="municipiosRedeGas"></label>
+
+            <span style="font-size: 1.2rem; margin-left: 10px" class="label"
+              >Municípios com rede de gás</span
+            >
+          </div>
+
+          <!-- Consultas Buffer -->
+
+          <div>
+            <h1 style="font-size: 1.2rem" class="title">Buffer</h1>
+            <div class="divider"><span></span></div>
+
+            <form id="formBuffer">
+              <label for="municipio">Cidade</label>
+              <div class="search">
+                <input
+                  type="search"
+                  id="municipio"
+                  class="searchTerm"
+                  placeholder="Serra"
+                />
+              </div>
+
+              <label for="raio">Raio (em metros)</label>
+              <div class="search">
+                <input
+                  type="search"
+                  id="raio"
+                  class="searchTerm"
+                  placeholder="(Ex: 2000)"
+                />
+              </div>
+            </form>
+            <button type="button" form="formBuffer" class="searchFormButton">
+              Pesquisar <i class="fa fa-search" style="padding-left: 5px"></i>
+            </button>
+          </div>
+
+          <div>
+            <h1 style="font-size: 1.2rem" class="title">Métricas</h1>
+            <div class="divider"><span></span></div>
+
+            <label for="nomeSede" style="font-size: 1.2rem">
+              Nome da Sede
+            </label>
+            <div class="search">
+              <input
+                type="search"
+                id="nomeSede"
+                class="searchTerm"
+                placeholder="(Ex: Alegre)"
               />
               <button type="submit" class="searchButton">
                 <i class="fa fa-search"></i>
