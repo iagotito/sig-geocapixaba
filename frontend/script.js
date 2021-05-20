@@ -90,6 +90,7 @@ let municipiosComGas = new ol.layer.Image({visible: false});
 let maiorEstacao = new ol.layer.Image({visible: false});
 let municipiosCruzados = new ol.layer.Image({visible: false});
 let rodoviaComSigla = new ol.layer.Image({visible: false});
+let estacoesProximasSede = new ol.layer.Image({visible: false});
 
 let layers = {
     mesorregioes: mesorregioes,
@@ -126,7 +127,7 @@ let map = new ol.Map({
         sedesMunicipais,
         sedesPorMeso,
         rodoviasPertoSede,
-        maiorEstacao
+        maiorEstacao,
     ],
     view: new ol.View({
         center: ol.proj.fromLonLat([-40.483260, -19.691305]),
@@ -311,4 +312,22 @@ function getMunicipiosCruzadosPorRodovia() {
     map.addLayer(rodoviaComSigla);
     layers.municipiosCruzados = municipiosCruzados;
     layers.rodoviaComSigla = rodoviaComSigla;
+}
+
+function getEstacoesProximasSede() {
+    let sedeName = 'SANTA LEOPOLDINA';
+    map.removeLayer(estacoesProximasSede);
+    estacoesProximasSede = new ol.layer.Image({
+        source: new ol.source.ImageWMS({
+            url: URL_WMS,
+            params: {
+                LAYERS: 'geocapixaba:estacoes_proximas_sede',
+                STYLES: '',
+                VIEWPARAMS: `sedeName:${sedeName}`
+            }
+        }),
+        visible: true
+    });
+    map.addLayer(estacoesProximasSede);
+    layers.estacoesProximasSede = estacoesProximasSede;
 }
