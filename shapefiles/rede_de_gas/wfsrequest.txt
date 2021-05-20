@@ -1,0 +1,1 @@
+https://ide.geobases.es.gov.br/geoserver/wfs?access_token=3bc70c1db77b11eb8097005056841014?format_options=charset%3AUTF-8&typename=geonode%3A_2020_11_esgas_es_rede_distribuicao&outputFormat=SHAPE-ZIP&version=1.0.0&service=WFS&request=GetFeature&access_token=3bc70c1db77b11eb8097005056841014
