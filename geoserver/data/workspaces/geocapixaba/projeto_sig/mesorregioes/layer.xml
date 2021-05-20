@@ -1,0 +1,17 @@
+<layer>
+  <name>mesorregioes</name>
+  <id>LayerInfoImpl-39c123ae:17980b9b9e6:-7ffb</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-39c123ae:17980b9b9e6:-7fe8</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-39c123ae:17980b9b9e6:-7ffc</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-05-18 18:27:53.20 UTC</dateCreated>
+  <dateModified>2021-05-19 01:50:50.21 UTC</dateModified>
+</layer>

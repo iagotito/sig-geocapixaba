@@ -1,0 +1,17 @@
+<layer>
+  <name>rede_de_gas</name>
+  <id>LayerInfoImpl-39c123ae:17980b9b9e6:-7ff3</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-39c123ae:17980b9b9e6:-7fdb</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-39c123ae:17980b9b9e6:-7ff4</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-05-18 18:29:51.774 UTC</dateCreated>
+  <dateModified>2021-05-19 02:08:39.736 UTC</dateModified>
+</layer>

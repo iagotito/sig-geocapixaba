@@ -1,0 +1,13 @@
+<layer>
+  <name>quilometragem_rodovias_mesorregiao</name>
+  <id>LayerInfoImpl-7eb4070e:17986a52d44:-7e84</id>
+  <type>VECTOR</type>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-7eb4070e:17986a52d44:-7e85</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-05-19 23:46:35.14 UTC</dateCreated>
+</layer>

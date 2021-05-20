@@ -1,0 +1,17 @@
+<layer>
+  <name>buffer_circle</name>
+  <id>LayerInfoImpl-7eb4070e:17986a52d44:-7476</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-7eb4070e:17986a52d44:-7465</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-7eb4070e:17986a52d44:-7477</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-05-20 04:45:16.861 UTC</dateCreated>
+  <dateModified>2021-05-20 04:50:31.797 UTC</dateModified>
+</layer>

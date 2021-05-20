@@ -1,0 +1,17 @@
+<layer>
+  <name>limites_municipais</name>
+  <id>LayerInfoImpl-39c123ae:17980b9b9e6:-7ff5</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-39c123ae:17980b9b9e6:-7fe2</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-39c123ae:17980b9b9e6:-7ff6</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-05-18 18:29:19.719 UTC</dateCreated>
+  <dateModified>2021-05-19 01:59:32.392 UTC</dateModified>
+</layer>

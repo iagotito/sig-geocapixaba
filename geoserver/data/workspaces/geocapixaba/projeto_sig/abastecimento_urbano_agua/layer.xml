@@ -1,0 +1,17 @@
+<layer>
+  <name>abastecimento_urbano_agua</name>
+  <id>LayerInfoImpl-39c123ae:17980b9b9e6:-7ff9</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-39c123ae:17980b9b9e6:-7fed</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-39c123ae:17980b9b9e6:-7ffa</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-05-18 18:28:42.920 UTC</dateCreated>
+  <dateModified>2021-05-19 01:30:01.675 UTC</dateModified>
+</layer>

@@ -1,0 +1,17 @@
+<layer>
+  <name>rede_rodoviaria</name>
+  <id>LayerInfoImpl-39c123ae:17980b9b9e6:-7ff1</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-39c123ae:17980b9b9e6:-7fd6</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-39c123ae:17980b9b9e6:-7ff2</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-05-18 18:30:13.469 UTC</dateCreated>
+  <dateModified>2021-05-19 02:12:12.699 UTC</dateModified>
+</layer>

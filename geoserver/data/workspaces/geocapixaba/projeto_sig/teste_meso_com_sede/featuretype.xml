@@ -1,0 +1,75 @@
+<featureType>
+  <id>FeatureTypeInfoImpl-7e7592c1:1798569e850:-7d06</id>
+  <name>teste_meso_com_sede</name>
+  <nativeName>teste_meso_com_sede</nativeName>
+  <namespace>
+    <id>NamespaceInfoImpl-39c123ae:17980b9b9e6:-7ffe</id>
+  </namespace>
+  <title>teste_meso_com_sede</title>
+  <keywords>
+    <string>features</string>
+    <string>teste_meso_com_sede</string>
+  </keywords>
+  <nativeCRS>GEOGCS[&quot;SIRGAS 2000&quot;, 
+  DATUM[&quot;Sistema de Referencia Geocentrico para las AmericaS 2000&quot;, 
+    SPHEROID[&quot;GRS 1980&quot;, 6378137.0, 298.257222101, AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]], 
+    TOWGS84[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 
+    AUTHORITY[&quot;EPSG&quot;,&quot;6674&quot;]], 
+  PRIMEM[&quot;Greenwich&quot;, 0.0, AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]], 
+  UNIT[&quot;degree&quot;, 0.017453292519943295], 
+  AXIS[&quot;Geodetic longitude&quot;, EAST], 
+  AXIS[&quot;Geodetic latitude&quot;, NORTH], 
+  AUTHORITY[&quot;EPSG&quot;,&quot;4674&quot;]]</nativeCRS>
+  <srs>EPSG:4326</srs>
+  <nativeBoundingBox>
+    <minx>-180.0</minx>
+    <maxx>180.0</maxx>
+    <miny>-90.0</miny>
+    <maxy>90.0</maxy>
+    <crs>EPSG:4326</crs>
+  </nativeBoundingBox>
+  <latLonBoundingBox>
+    <minx>-180.0</minx>
+    <maxx>180.0</maxx>
+    <miny>-90.0</miny>
+    <maxy>90.0</maxy>
+    <crs>EPSG:4326</crs>
+  </latLonBoundingBox>
+  <projectionPolicy>REPROJECT_TO_DECLARED</projectionPolicy>
+  <enabled>true</enabled>
+  <metadata>
+    <entry key="JDBC_VIRTUAL_TABLE">
+      <virtualTable>
+        <name>teste_meso_com_sede</name>
+        <sql>select meso.nm_meso, meso.geom from&#xd;
+(select nm_meso, geom from mesorregioes) as meso,&#xd;
+(select name, geom from sedes_municipais) as sede&#xd;
+where sede.name like &apos;%sedeName%&apos; and st_within(sede.geom, st_transform(meso.geom, 31984))
+</sql>
+        <escapeSql>false</escapeSql>
+        <geometry>
+          <name>geom</name>
+          <type>MultiPolygon</type>
+          <srid>4674</srid>
+        </geometry>
+        <parameter>
+          <name>sedeName</name>
+          <defaultValue>ALEGRE</defaultValue>
+          <regexpValidator>^[\w\d\sa-zA-Z0-9áéíóúÁÉÍÓÚâêôÂÊÔãẽõÃẼÕçÇ]*$</regexpValidator>
+        </parameter>
+      </virtualTable>
+    </entry>
+  </metadata>
+  <store class="dataStore">
+    <id>DataStoreInfoImpl-39c123ae:17980b9b9e6:-7ffd</id>
+  </store>
+  <serviceConfiguration>false</serviceConfiguration>
+  <simpleConversionEnabled>false</simpleConversionEnabled>
+  <maxFeatures>0</maxFeatures>
+  <numDecimals>0</numDecimals>
+  <padWithZeros>false</padWithZeros>
+  <forcedDecimal>false</forcedDecimal>
+  <overridingServiceSRS>false</overridingServiceSRS>
+  <skipNumberMatched>false</skipNumberMatched>
+  <circularArcPresent>false</circularArcPresent>
+</featureType>

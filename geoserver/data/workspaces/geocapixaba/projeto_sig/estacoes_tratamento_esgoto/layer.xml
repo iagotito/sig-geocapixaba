@@ -1,0 +1,16 @@
+<layer>
+  <name>estacoes_tratamento_esgoto</name>
+  <id>LayerInfoImpl-39c123ae:17980b9b9e6:-7ff7</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl--570ae188:124761b8d78:-7fe0</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-39c123ae:17980b9b9e6:-7ff8</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-05-18 18:29:03.282 UTC</dateCreated>
+</layer>

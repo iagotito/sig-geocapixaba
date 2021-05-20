@@ -1,0 +1,16 @@
+<layer>
+  <name>municipios_com_gas</name>
+  <id>LayerInfoImpl-7e7592c1:1798569e850:-6ebe</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl--570ae188:124761b8d78:-7fe0</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-7e7592c1:1798569e850:-6ebf</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-05-19 21:24:08.205 UTC</dateCreated>
+</layer>

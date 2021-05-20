@@ -1,0 +1,60 @@
+<featureType>
+  <id>FeatureTypeInfoImpl-7eb4070e:17986a52d44:-7e85</id>
+  <name>quilometragem_rodovias_mesorregiao</name>
+  <nativeName>quilometragem_rodovias_mesorregiao</nativeName>
+  <namespace>
+    <id>NamespaceInfoImpl-39c123ae:17980b9b9e6:-7ffe</id>
+  </namespace>
+  <title>quilometragem_rodovias_mesorregiao</title>
+  <keywords>
+    <string>features</string>
+    <string>quilometragem_rodovias_mesorregiao</string>
+  </keywords>
+  <srs>EPSG:404000</srs>
+  <nativeBoundingBox>
+    <minx>-1.0</minx>
+    <maxx>0.0</maxx>
+    <miny>-1.0</miny>
+    <maxy>0.0</maxy>
+  </nativeBoundingBox>
+  <latLonBoundingBox>
+    <minx>-1.0</minx>
+    <maxx>0.0</maxx>
+    <miny>-1.0</miny>
+    <maxy>0.0</maxy>
+    <crs>EPSG:4326</crs>
+  </latLonBoundingBox>
+  <projectionPolicy>FORCE_DECLARED</projectionPolicy>
+  <enabled>true</enabled>
+  <metadata>
+    <entry key="JDBC_VIRTUAL_TABLE">
+      <virtualTable>
+        <name>quilometragem_rodovias_mesorregiao</name>
+        <sql>select SUM(len.st_length) from (&#xd;
+select st_length(st_intersection(rodov.geom, st_transform(meso.geom, 31984))) from&#xd;
+(select nm_meso, geom from mesorregioes) meso,&#xd;
+(select geom from rede_rodoviaria) rodov&#xd;
+where nm_meso=&apos;%mesoName%&apos;&#xd;
+) as len
+</sql>
+        <escapeSql>false</escapeSql>
+        <parameter>
+          <name>mesoName</name>
+          <regexpValidator>^[\w\d\s]+$</regexpValidator>
+        </parameter>
+      </virtualTable>
+    </entry>
+  </metadata>
+  <store class="dataStore">
+    <id>DataStoreInfoImpl-39c123ae:17980b9b9e6:-7ffd</id>
+  </store>
+  <serviceConfiguration>false</serviceConfiguration>
+  <simpleConversionEnabled>false</simpleConversionEnabled>
+  <maxFeatures>0</maxFeatures>
+  <numDecimals>0</numDecimals>
+  <padWithZeros>false</padWithZeros>
+  <forcedDecimal>false</forcedDecimal>
+  <overridingServiceSRS>false</overridingServiceSRS>
+  <skipNumberMatched>false</skipNumberMatched>
+  <circularArcPresent>false</circularArcPresent>
+</featureType>

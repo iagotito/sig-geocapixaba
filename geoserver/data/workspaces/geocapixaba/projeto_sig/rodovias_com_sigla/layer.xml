@@ -1,0 +1,16 @@
+<layer>
+  <name>rodovias_com_sigla</name>
+  <id>LayerInfoImpl-7eb4070e:17986a52d44:-7fca</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl--570ae188:124761b8d78:-7fe3</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-7eb4070e:17986a52d44:-7fcb</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2021-05-19 22:38:31.446 UTC</dateCreated>
+</layer>
