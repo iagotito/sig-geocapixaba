@@ -228,9 +228,11 @@ function getMunicipiosFromMeso() {
     layers.sedesPorMeso = sedesPorMeso;
 }
 
+let $sedeBuffer = document.getElementById('sede');
+let $raioBuffer = document.getElementById('raio');
 function getRodoviasPertoDeSedeBuffer() {
-    let sedeName = 'LINHARES';
-    let bufferRadius = 5000;
+    let sedeName = $sedeBuffer.value.toUpperCase();
+    let bufferRadius = $raioBuffer.value;
     map.removeLayer(rodoviasPertoSede);
     rodoviasPertoSede = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -247,8 +249,9 @@ function getRodoviasPertoDeSedeBuffer() {
     layers.rodoviasPertoSede = rodoviasPertoSede;
 }
 
-function getMunicipiosComGas() {
+function getMunicipiosComGas(show) {
     map.removeLayer(municipiosComGas);
+    if (!show) { return; }
     municipiosComGas = new ol.layer.Image({
         source: new ol.source.ImageWMS({
             url: URL_WMS,
@@ -260,12 +263,14 @@ function getMunicipiosComGas() {
         visible: true,
         opacity: 0.25
     });
+    console.log(municipiosComGas);
     map.addLayer(municipiosComGas);
     layers.municipiosComGas = municipiosComGas;
 }
 
+let $maiorEstacaoInput = document.getElementById('esgotoMunicipio');
 function getMaiorEstacaoMunicipio() {
-    let municipioName = 'Cariacica';
+    let municipioName = $maiorEstacaoInput.value;
     map.removeLayer(maiorEstacao);
     maiorEstacao = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -282,8 +287,9 @@ function getMaiorEstacaoMunicipio() {
     layers.maiorEstacao = maiorEstacao;
 }
 
+let $rodoviaInput = document.getElementById('rodoviasMunicipio');
 function getMunicipiosCruzadosPorRodovia() {
-    let sigla = 'ES-164';
+    let sigla = $rodoviaInput.value;
     map.removeLayer(municipiosCruzados);
     map.removeLayer(rodoviaComSigla);
     municipiosCruzados = new ol.layer.Image({
@@ -295,7 +301,8 @@ function getMunicipiosCruzadosPorRodovia() {
                 VIEWPARAMS: `sigla:${sigla}`
             }
         }),
-        visible: true
+        visible: true,
+        opacity: 0.25
     });
     rodoviaComSigla = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -306,7 +313,8 @@ function getMunicipiosCruzadosPorRodovia() {
                 VIEWPARAMS: `sigla:${sigla}`
             }
         }),
-        visible: true
+        visible: true,
+        opacity: 0.5
     });
     map.addLayer(municipiosCruzados);
     map.addLayer(rodoviaComSigla);
@@ -314,8 +322,9 @@ function getMunicipiosCruzadosPorRodovia() {
     layers.rodoviaComSigla = rodoviaComSigla;
 }
 
+let $nomeSede = document.getElementById('nomeSede');
 function getEstacoesProximasSede() {
-    let sedeName = 'SANTA LEOPOLDINA';
+    let sedeName = $nomeSede.value.toUpperCase();
     map.removeLayer(estacoesProximasSede);
     estacoesProximasSede = new ol.layer.Image({
         source: new ol.source.ImageWMS({

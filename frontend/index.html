@@ -356,14 +356,14 @@
                 type="search"
                 id="esgotoMunicipio"
                 class="searchTerm"
-                placeholder="(Ex: vila velha)"
+                placeholder="(Ex: Vila Velha)"
               />
-              <button type="submit" class="searchButton">
+              <button onclick="getMaiorEstacaoMunicipio()" type="submit" class="searchButton">
                 <i class="fa fa-search"></i>
               </button>
             </div>
             <label for="rodoviasMunicipio" style="font-size: 1.2rem"
-              >Municípios cruazados por rodovia</label
+              >Municípios cruzados por rodovia</label
             >
             <div class="search">
               <input
@@ -372,7 +372,7 @@
                 class="searchTerm"
                 placeholder="(Ex: ES-010)"
               />
-              <button type="submit" class="searchButton">
+              <button onclick="getMunicipiosCruzadosPorRodovia()" type="submit" class="searchButton">
                 <i class="fa fa-search"></i>
               </button>
             </div>
@@ -384,7 +384,7 @@
               id="municipiosRedeGas"
               name="municipiosRedeGas"
               value="true"
-              onclick='activeLayer("municipiosRedeGas", this.checked)'
+              onclick='getMunicipiosComGas(this.checked)'
             />
             <label class="labelSwitch" for="municipiosRedeGas"></label>
 
@@ -400,13 +400,13 @@
             <div class="divider"><span></span></div>
 
             <form id="formBuffer">
-              <label for="municipio">Cidade</label>
+              <label for="sede">Cidade</label>
               <div class="search">
                 <input
                   type="search"
-                  id="municipio"
+                  id="sede"
                   class="searchTerm"
-                  placeholder="Serra"
+                  placeholder="(Ex: Linhares)"
                 />
               </div>
 
@@ -416,11 +416,11 @@
                   type="search"
                   id="raio"
                   class="searchTerm"
-                  placeholder="(Ex: 2000)"
+                  placeholder="(Ex: 9000)"
                 />
               </div>
             </form>
-            <button type="button" form="formBuffer" class="searchFormButton">
+            <button onclick="getRodoviasPertoDeSedeBuffer()" type="button" form="formBuffer" class="searchFormButton">
               Pesquisar <i class="fa fa-search" style="padding-left: 5px"></i>
             </button>
           </div>
@@ -430,7 +430,7 @@
             <div class="divider"><span></span></div>
 
             <label for="nomeSede" style="font-size: 1.2rem">
-              Nome da Sede
+              3 estações de tratamento de esgoto mais próximas da sede
             </label>
             <div class="search">
               <input
@@ -439,7 +439,7 @@
                 class="searchTerm"
                 placeholder="(Ex: Alegre)"
               />
-              <button type="submit" class="searchButton">
+              <button onclick="getEstacoesProximasSede()" type="submit" class="searchButton">
                 <i class="fa fa-search"></i>
               </button>
             </div>
