@@ -86,6 +86,7 @@ let sedesMunicipais = new ol.layer.Image({
 
 let sedesPorMeso = new ol.layer.Image({visible: false});
 let rodoviasPertoSede = new ol.layer.Image({visible: false});
+let bufferCircle = new ol.layer.Image({visible: false});
 let municipiosComGas = new ol.layer.Image({visible: false});
 let maiorEstacao = new ol.layer.Image({visible: false});
 let municipiosCruzados = new ol.layer.Image({visible: false});
@@ -128,6 +129,7 @@ let map = new ol.Map({
         sedesPorMeso,
         rodoviasPertoSede,
         maiorEstacao,
+        bufferCircle
     ],
     view: new ol.View({
         center: ol.proj.fromLonLat([-40.483260, -19.691305]),
@@ -234,6 +236,7 @@ function getRodoviasPertoDeSedeBuffer() {
     let sedeName = $sedeBuffer.value.toUpperCase();
     let bufferRadius = $raioBuffer.value;
     map.removeLayer(rodoviasPertoSede);
+    map.removeLayer(bufferCircle);
     rodoviasPertoSede = new ol.layer.Image({
         source: new ol.source.ImageWMS({
             url: URL_WMS,
@@ -245,8 +248,21 @@ function getRodoviasPertoDeSedeBuffer() {
         }),
         visible: true
     });
+    bufferCircle = new ol.layer.Image({
+        source: new ol.source.ImageWMS({
+            url: URL_WMS,
+            params: {
+                LAYERS: 'geocapixaba:buffer_circle',
+                STYLES: '',
+                VIEWPARAMS: `sedeName:${sedeName};bufferRadius:${bufferRadius}`
+            }
+        }),
+        visible: true
+    });
     map.addLayer(rodoviasPertoSede);
+    map.addLayer(bufferCircle);
     layers.rodoviasPertoSede = rodoviasPertoSede;
+    layers.bufferCircle = bufferCircle;
 }
 
 function getMunicipiosComGas(show) {
