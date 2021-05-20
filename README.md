@@ -36,3 +36,16 @@ __Consultas:__
 - 1 Usando buffer  
 - 3 consultas com operadores topológicos  
 - 1 consulta métrica GeoCapixaba, estado do Espírito Santo.
+
+## Imagens
+__Camadas__
+![Camadas](images/camadas.jpeg "Camadas")
+
+__Consulta Topográfica__
+![Consulta1](images/consulta1.jpeg "Consulta Topográfifca")
+
+__Consulta com Buffer__
+![Consulta2](images/consulta2.jpeg "Consulta Buffer")
+
+__Consulta Métrica__
+![Consulta3](images/consulta3.jpeg "Consulta Métrica")
