@@ -340,3 +340,9 @@ function getEstacoesProximasSede() {
     map.addLayer(estacoesProximasSede);
     layers.estacoesProximasSede = estacoesProximasSede;
 }
+
+function resetLayers() {
+    Object.values(layers).forEach((l) => {
+        l.setVisible(false);
+    });
+}
